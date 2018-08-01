@@ -60,11 +60,12 @@ pipeline {
         BUILD_IMAGE_REPO_TAG = "${params.IMAGE_REPO_NAME}:${env.BUILD_TAG}"
       }
       steps{
-        sh "docker push $BUILD_IMAGE_REPO_TAG"
-        sh "docker push ${params.IMAGE_REPO_NAME}:$COMMIT_TAG"
-        sh "docker push ${params.IMAGE_REPO_NAME}:${readJSON(file: 'package.json').version}"
-        sh "docker push ${params.IMAGE_REPO_NAME}:${params.LATEST_BUILD_TAG}"
-        sh "docker push ${params.IMAGE_REPO_NAME}:$BRANCH_NAME-latest"
+	withDockerRegistry([ credentialsId: "fbc5073a-d8ea-471d-893b-250eb793f6ab", url: "" ]) {
+         sh "docker push $BUILD_IMAGE_REPO_TAG"
+         sh "docker push ${params.IMAGE_REPO_NAME}:$COMMIT_TAG"
+         sh "docker push ${params.IMAGE_REPO_NAME}:${readJSON(file: 'package.json').version}"
+         sh "docker push ${params.IMAGE_REPO_NAME}:${params.LATEST_BUILD_TAG}"
+         sh "docker push ${params.IMAGE_REPO_NAME}:$BRANCH_NAME-latest"
       }
     }
     stage('Remove Previous Stack'){
