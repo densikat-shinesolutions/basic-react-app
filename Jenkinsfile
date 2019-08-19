@@ -19,13 +19,17 @@ pipeline {
     }
     stage('docker build'){
       steps{
-        docker.build('basic-react-app')
+        script {
+          docker.build('basic-react-app')
+        }
       }
     }
     stage('docker push'){
       steps{
-        docker.withRegistry('https://541837530073.dkr.ecr.ap-southeast-2.amazonaws.com/basic-react-app', 'ecr:ap-southeast-2:ecrpush') {
-           docker.image('basic-react-app').push('latest')
+        script {
+          docker.withRegistry('https://541837530073.dkr.ecr.ap-southeast-2.amazonaws.com/basic-react-app', 'ecr:ap-southeast-2:ecrpush') {
+            docker.image('basic-react-app').push('latest')
+          }
         }
       }
     }
