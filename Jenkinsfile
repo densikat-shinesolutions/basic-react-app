@@ -27,7 +27,7 @@ pipeline {
     stage('docker push'){
       steps{
         script {
-          docker.withRegistry('https://541837530073.dkr.ecr.ap-southeast-2.amazonaws.com/basic-react-app', 'ecr:ap-southeast-2:ecrpush') {
+          docker.withRegistry('portabledave/basic-react-app', '822d4685-d1fe-4628-a373-84744cdb8327') {
             docker.image('basic-react-app').push('latest')
           }
         }
