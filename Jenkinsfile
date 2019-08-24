@@ -20,7 +20,7 @@ pipeline {
     stage('docker build'){
       steps{
         script {
-          docker.build('basic-react-app')
+          docker.build('portabledave/basic-react-app')
         }
       }
     }
@@ -28,7 +28,7 @@ pipeline {
       steps{
         script {
           docker.withRegistry('https://registry.hub.docker.com', '822d4685-d1fe-4628-a373-84744cdb8327') {
-            docker.image('basic-react-app').push('latest')
+            docker.image('portabledave/basic-react-app').push('latest')
           }
         }
       }
